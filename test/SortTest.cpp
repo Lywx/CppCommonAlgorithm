@@ -11,10 +11,11 @@
 #include <QuickSort.cpp>
 #include <CountingSort.cpp>
 #include <HeapSort.cpp>
+#include <BubbleSort.cpp>
 
 using namespace std;
 
-const int SortCount = 8;
+const int SortCount = 9;
 void SortResult(int *A, int n, int index)
 {
     switch (index)
@@ -52,6 +53,10 @@ void SortResult(int *A, int n, int index)
 
     case 7:
         HeapSort(A, n);
+        break;
+
+    case 8:
+        BubbleSort(A, n);
         break;
 
     default:
