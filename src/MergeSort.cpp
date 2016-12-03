@@ -5,7 +5,7 @@
 using namespace std;
 
 template <typename T>
-void MERGE(T A[], int begin, int end, int middle, T sentinel)
+void Merge(T A[], int begin, int end, int middle, T sentinel)
 {
     int n1 = middle - begin + 1;
     int n2 = end - middle;
@@ -49,7 +49,7 @@ void MERGE(T A[], int begin, int end, int middle, T sentinel)
 }
 
 template <typename T>
-void MERGE_SORT(T A[], int begin, int end, T sentinel)
+void MergeSort(T A[], int begin, int end, T sentinel)
 {
     if (begin >= end)
     {
@@ -58,13 +58,13 @@ void MERGE_SORT(T A[], int begin, int end, T sentinel)
 
     int middle = (begin + end) / 2;
 
-    MERGE_SORT(A, begin, middle, sentinel);
-    MERGE_SORT(A, middle + 1, end, sentinel);
-    MERGE(A, begin, end, middle, sentinel);
+    MergeSort(A, begin, middle, sentinel);
+    MergeSort(A, middle + 1, end, sentinel);
+    Merge(A, begin, end, middle, sentinel);
 }
 
 template <typename T>
-void MERGE_USING_VECTOR(T A[], int begin, int end, int middle, T sentinel) noexcept
+void MergeUsingVector(T A[], int begin, int end, int middle, T sentinel) noexcept
 {
     int n1 = middle - begin + 1;
     int n2 = end - middle;
@@ -106,7 +106,7 @@ void MERGE_USING_VECTOR(T A[], int begin, int end, int middle, T sentinel) noexc
     }
 }
 
-void MERGE_USING_VECTOR(int A[], int begin, int end, int middle, int sentinel) noexcept
+void MergeUsingVector(int A[], int begin, int end, int middle, int sentinel) noexcept
 {
     int n1 = middle - begin + 1;
     int n2 = end - middle;
@@ -144,7 +144,7 @@ void MERGE_USING_VECTOR(int A[], int begin, int end, int middle, int sentinel) n
 }
 
 template <typename T>
-void MERGE_SORT_USING_VECTOR(T A[], int begin, int end, T sentinel)
+void MergeSortUsingVector(T A[], int begin, int end, T sentinel)
 {
     if (begin >= end)
     {
@@ -153,25 +153,7 @@ void MERGE_SORT_USING_VECTOR(T A[], int begin, int end, T sentinel)
 
     int middle = (begin + end) / 2;
 
-    MERGE_SORT_USING_VECTOR(A, begin, middle, sentinel);
-    MERGE_SORT_USING_VECTOR(A, middle + 1, end, sentinel);
-    MERGE_USING_VECTOR(A, begin, end, middle, sentinel);
-}
-
-int main(int argc, char **argv)
-{
-    int A[] = { 9, 0, 1, 3, 4, 6, 7, 8, 2, 5 };
-    int S[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-    int n = 10;
-
-    MERGE_SORT(A, 0, n - 1, INT_MAX);
-    // MERGE_SORT_USING_VECTOR(A, 0, n - 1, INT_MAX);
-
-    for (auto i = 0; i < n; ++i)
-    {
-        assert(A[i] == S[i]);
-    }
-
-    return 0;
+    MergeSortUsingVector(A, begin, middle, sentinel);
+    MergeSortUsingVector(A, middle + 1, end, sentinel);
+    MergeUsingVector(A, begin, end, middle, sentinel);
 }

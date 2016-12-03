@@ -5,7 +5,7 @@
 using namespace std;
 
 template <typename T>
-int PARTITION(T A[], int begin, int end)
+int Partition(T A[], int begin, int end)
 {
     int Rbegin = begin;
     for (int Ubegin = begin; Ubegin <= end - 1; ++Ubegin)
@@ -22,7 +22,7 @@ int PARTITION(T A[], int begin, int end)
 }
 
 template <typename T>
-int PARTITION_READABLE(T A[], int begin, int end)
+int PartitionReadable(T A[], int begin, int end)
 {
     int pivot = end;
 
@@ -64,7 +64,7 @@ int PARTITION_READABLE(T A[], int begin, int end)
 }
 
 template <typename T>
-void QUICK_SORT(T A[], int begin, int end)
+void QuickSort(T A[], int begin, int end)
 {
     // At most 1 element in [begin, end], so there is nothing to sort
     if (begin >= end)
@@ -72,24 +72,7 @@ void QUICK_SORT(T A[], int begin, int end)
         return;
     }
 
-    int pivot = PARTITION(A, begin, end);
-    QUICK_SORT(A, begin, pivot - 1);
-    QUICK_SORT(A, pivot + 1, end);
-}
-
-int main(int argc, char **argv)
-{
-    int A[] = { 9, 0, 1, 3, 4, 6, 7, 8, 2, 5 };
-    int S[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-    int n = 10;
-
-    QUICK_SORT(A, 0, n - 1);
-
-    for (auto i = 0; i < n; ++i)
-    {
-        assert(A[i] == S[i]);
-    }
-
-    return 0;
+    int pivot = Partition(A, begin, end);
+    QuickSort(A, begin, pivot - 1);
+    QuickSort(A, pivot + 1, end);
 }
