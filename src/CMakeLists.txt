@@ -1,0 +1,13 @@
+file(GLOB SOURCE_FILES *.cpp *.h)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${SIMPLE_CONTAINER_ARCHIVE_OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SIMPLE_CONTAINER_LIBRARY_OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SIMPLE_CONTAINER_RUNTIME_OUTPUT_DIR})
+
+add_library(SimpleAlgorithm STATIC 
+	${SOURCE_FILES})
+
+set_target_properties(SimpleAlgorithm PROPERTIES COMPILE_FLAGS "/MTd")
+set_target_properties(SimpleAlgorithm PROPERTIES SUFFIX ".lib")
+set_target_properties(SimpleAlgorithm PROPERTIES FOLDER "Algorithm Targets")
+
