@@ -4,8 +4,11 @@
 #include <string>
 
 #include <LinearSearch.cpp>
+#include <RecursiveLinearSearch.cpp>
 #include <BetterLinearSearch.cpp>
 #include <SentinelLinearSearch.cpp>
+#include <BinarySearch.cpp>
+#include <RecursiveBinarySearch.cpp>
 
 using namespace std;
 
@@ -13,18 +16,24 @@ void RequireFound(int *A, int n, int x, int i, int line)
 {
     INFO("Line number: " + to_string(line));
 
-    REQUIRE(LinearSearch(A, n, x)         == i);
-    REQUIRE(BetterLinearSearch(A, n, x)   == i);
-    REQUIRE(SentinelLinearSearch(A, n, x) == i);
+    REQUIRE(LinearSearch(A, n, x)                 == i);
+    REQUIRE(BetterLinearSearch(A, n, x)           == i);
+    REQUIRE(SentinelLinearSearch(A, n, x)         == i);
+    REQUIRE(RecursiveLinearSearch(A, n, 0, x)     == i);
+    REQUIRE(BinarySearch(A, n, x)                 == i);
+    REQUIRE(RecursiveBinarySearch(A, x, 0, n - 1) == i);
 }
 
 void RequireNotFound(int *A, int n, int x, int line)
 {
     INFO("Line number: " + to_string(line));
 
-    REQUIRE(LinearSearch(A, n, x)         == NOT_FOUND);
-    REQUIRE(BetterLinearSearch(A, n, x)   == NOT_FOUND);
-    REQUIRE(SentinelLinearSearch(A, n, x) == NOT_FOUND);
+    REQUIRE(LinearSearch(A, n, x)                 == NOT_FOUND);
+    REQUIRE(BetterLinearSearch(A, n, x)           == NOT_FOUND);
+    REQUIRE(SentinelLinearSearch(A, n, x)         == NOT_FOUND);
+    REQUIRE(RecursiveLinearSearch(A, n, 0, x)     == NOT_FOUND);
+    REQUIRE(BinarySearch(A, n, x)                 == NOT_FOUND);
+    REQUIRE(RecursiveBinarySearch(A, x, 0, n - 1) == NOT_FOUND);
 }
 
 #define REQUIRE_NOT_FOUND(A, n, x) RequireNotFound(A, n, x, __LINE__);
