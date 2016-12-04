@@ -12,12 +12,34 @@
 #include <CountingSort.cpp>
 #include <HeapSort.cpp>
 #include <BubbleSort.cpp>
+#include <ShellSort.cpp>
+
+#include "PerformanceCounter.h"
 
 using namespace std;
 
-const int SortCount = 9;
+const vector<string> SortName =
+{
+    "Insertion Sort",
+    "Selection Sort",
+    "Merge Sort",
+    "Merge Sort Using Vector",
+    "Quick Sort",
+    "Counting Sort Inplace",
+    "Counting Sort",
+    "Heap Sort",
+    "Bubble Sort",
+    "Shell Sort A",
+    "Shell Sort B",
+};
+
+const int SortCount = SortName.size();
+
 void SortResult(int *A, int n, int index)
 {
+    PerformanceCounter counter;
+    double counterBegin = counter.GetMilliseconds();
+
     switch (index)
     {
     case 0:
@@ -59,9 +81,20 @@ void SortResult(int *A, int n, int index)
         BubbleSort(A, n);
         break;
 
+    case 9:
+        ShellSortA(A, n);
+        break;
+
+    case 10:
+        ShellSortB(A, n);
+        break;
+
     default:
         break;
     }
+
+    double counterEnd = counter.GetMilliseconds();
+    WARN("Millisecond: " + to_string(counterEnd - counterBegin) + " " + SortName[index]);
 }
 
 void RequireResult(int *A, int *AExpect, int n, int line)

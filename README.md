@@ -15,7 +15,7 @@ Selection Sort (Unstable)
 
 Heap Sort (Unstable)
 
-### 3.Comparison Sort 
+### 3. Comparison Sort 
 
 Bubble Sort (Stable)
 
@@ -27,7 +27,9 @@ Merge Sort (Stable)
 
 ### 5. Non-comparative Sort
 
-Counting Sort(Stable)
+Counting Sort (Stable)
+Bucket Sort (TODO, Stable)
+Radix Sort (TODO, Stable)
 
 ## Searching
 
