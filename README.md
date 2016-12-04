@@ -28,7 +28,9 @@ Merge Sort (Stable)
 ### 5. Non-comparative Sort
 
 Counting Sort (Stable)
+
 Bucket Sort (TODO, Stable)
+
 Radix Sort (TODO, Stable)
 
 ## Searching
