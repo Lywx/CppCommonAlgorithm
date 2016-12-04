@@ -43,6 +43,7 @@ TEST_CASE("Search Test", "")
 {
     SECTION("")
     {
+        // TODO(Wuxiang): Add more test cases.
         int A[5] = { 0, 1, 2, 3, 4 };
         int n;
         int x;

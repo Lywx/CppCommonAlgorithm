@@ -14,6 +14,18 @@ void ShellSortA(T *A, int n)
             // NOTE(Wuxiang): The correct way is to use the insertions sort in
             // this loop rather than bubble sort. I made this mistake before
             // coming to the correct solution.
+            //
+            // The order of swapping (or assignment) (step = 4) is:
+            //
+            // +---+---+---+---+---+---+---+ outer 1st
+            // -+---+---+---+---+---+---+--- outer 2nd
+            // --+---+---+---+---+---+---+-- outer 3rd
+            // ---+---+---+---+---+---+---+- ...
+            //
+            // Stop here.
+            //
+            // + = guaranteed 'knownIndex' position.
+            //
             for (int stepIndex = stepOffset;
 
                     // Compensate for satisfying the condition 'stepIndex + step < n'
@@ -58,10 +70,41 @@ void ShellSortB(T *A, int n)
 {
     for (int step = n / 2; step > 0; step /= 2)
     {
+        // NOTE(Wuxiang): You could see this loop variable could range in
+        // [step, step + 1, ..., n - 1]. The way of iterating is different from
+        // solution a. This solution builds upon the fact after we insertion
+        // sort the element before current index, the later sorting would not
+        // affect (or re-sort) the sorted sub-array because of the while loop
+        // entry condition.
+        //
+        // The order of swapping (or assignment) (step = 4) is:
+        //
+        // +---------------------------- outer 1st
+        // -+--------------------------- outer 2nd
+        // --+-------------------------- outer 3rd
+        // ---+------------------------- ...
+        // ----+------------------------
+        // ?----+-----------------------
+        // -?----+----------------------
+        // --?----+---------------------
+        // ---?----+--------------------
+        // ----?----+-------------------
+        // -----?----+------------------
+        // ------?----+-----------------
+        // ...
+        // ----------------------?----+-
+        // -----------------------?----+
+        //
+        // Stop here.
+        //
+        // + = guaranteed 'knownIndex' position.
+        // ? = possible 'knownIndex' position
+
         for (int stepOffset = step; stepOffset < n; ++stepOffset)
         {
             int newValue = A[stepOffset];
             int knownIndex = stepOffset - step;
+
             while (A[knownIndex] > newValue && knownIndex >= 0)
             {
                 A[knownIndex + step] = A[knownIndex];
