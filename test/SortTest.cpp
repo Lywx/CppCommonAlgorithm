@@ -5,14 +5,14 @@
 #include <cstring>
 #include <string>
 
-#include <InsertionSort.cpp>
-#include <SelectionSort.cpp>
-#include <MergeSort.cpp>
-#include <QuickSort.cpp>
-#include <CountingSort.cpp>
-#include <HeapSort.cpp>
-#include <BubbleSort.cpp>
-#include <ShellSort.cpp>
+#include <InsertionSort.hpp>
+#include <SelectionSort.hpp>
+#include <MergeSort.hpp>
+#include <QuickSort.hpp>
+#include <CountingSort.hpp>
+#include <HeapSort.hpp>
+#include <BubbleSort.hpp>
+#include <ShellSort.hpp>
 
 #include "PerformanceCounter.h"
 
@@ -26,20 +26,17 @@ const vector<string> SortName =
     "Merge Sort Using Vector",
     "Quick Sort",
     "Counting Sort Inplace",
-    "Counting Sort",
+    "Counting Sort with Copying",
     "Heap Sort",
     "Bubble Sort",
     "Shell Sort A",
     "Shell Sort B",
 };
 
-const int SortCount = SortName.size();
+const size_t SortCount = SortName.size();
 
 void SortResult(int *A, int n, int index)
 {
-    PerformanceCounter counter;
-    double counterBegin = counter.GetMilliseconds();
-
     switch (index)
     {
     case 0:
@@ -92,9 +89,6 @@ void SortResult(int *A, int n, int index)
     default:
         break;
     }
-
-    double counterEnd = counter.GetMilliseconds();
-    WARN("Millisecond: " + to_string(counterEnd - counterBegin) + " " + SortName[index]);
 }
 
 void RequireResult(int *A, int *AExpect, int n, int line)
@@ -103,6 +97,7 @@ void RequireResult(int *A, int *AExpect, int n, int line)
 
     for (int index = 0; index < SortCount; ++index)
     {
+        // Test correction
         memcpy(B, A, sizeof(int) * n);
         SortResult(B, n, index);
 
@@ -113,6 +108,19 @@ void RequireResult(int *A, int *AExpect, int n, int line)
         {
             REQUIRE(B[i] == AExpect[i]);
         }
+
+        // Profile performance
+        PerformanceCounter counter;
+        double counterBegin = counter.GetMilliseconds();
+
+        for (int repeat = 0; repeat < 10000; ++repeat)
+        {
+            memcpy(B, A, sizeof(int) * n);
+            SortResult(B, n, index);
+        }
+
+        double counterEnd = counter.GetMilliseconds();
+        WARN("Millisecond: " + to_string(counterEnd - counterBegin) + " " + SortName[index]);
     }
 
     delete[] B;

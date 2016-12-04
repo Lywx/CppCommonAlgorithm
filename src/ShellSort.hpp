@@ -1,8 +1,8 @@
-﻿#include <utility>
+﻿#pragma once
+#include <utility>
 
-// @Summary: This is my solution after understanding the material. And the
-// profiling proves that this is much better than b solution, which is copied from
-// 俞勇 数据结构_ 思想与实现, 1st, 2009 and this is trying to over-sort the sorted sub-array.
+// @Summary: This is my solution after understanding the material. The
+// profiling proves that this has somehow similar performance with solution b.
 template <typename T>
 void ShellSortA(T *A, int n)
 {
@@ -52,6 +52,7 @@ void ShellSortA(T *A, int n)
     }
 }
 
+// @Summary: This solution comes from 俞勇 数据结构_ 思想与实现, 1st, 2009.
 template <typename T>
 void ShellSortB(T *A, int n)
 {

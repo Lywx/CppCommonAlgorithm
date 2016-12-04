@@ -11,7 +11,7 @@ add_subdirectory(src)
 add_subdirectory(test)
 
 # Global Solution
-project(CommonAlgorithm)
+project(CommonAlgorithm CXX)
 
 # Visual Studio project folder
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMake Targets")

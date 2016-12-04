@@ -3,12 +3,12 @@
 #include <iostream>
 #include <string>
 
-#include <LinearSearch.cpp>
-#include <RecursiveLinearSearch.cpp>
-#include <BetterLinearSearch.cpp>
-#include <SentinelLinearSearch.cpp>
-#include <BinarySearch.cpp>
-#include <RecursiveBinarySearch.cpp>
+#include <LinearSearch.hpp>
+#include <RecursiveLinearSearch.hpp>
+#include <BetterLinearSearch.hpp>
+#include <SentinelLinearSearch.hpp>
+#include <BinarySearch.hpp>
+#include <RecursiveBinarySearch.hpp>
 
 using namespace std;
 

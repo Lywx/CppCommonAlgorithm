@@ -1,3 +1,4 @@
+#pragma once
 #include <utility>
 
 void BubbleSort(int *A, int n)

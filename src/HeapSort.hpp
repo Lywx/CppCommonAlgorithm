@@ -1,3 +1,4 @@
+#pragma once
 #include <utility>
 
 void PercolateDown(int *A, int i, int n)
