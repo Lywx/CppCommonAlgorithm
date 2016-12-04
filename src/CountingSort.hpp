@@ -1,11 +1,12 @@
 #pragma once
+
 #include <cassert>
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-vector<int> CountKeyEqual(int A[], int n, int min, int max)
+inline vector<int> CountKeyEqualUsingNewVector(int A[], int n, int min, int max)
 {
     int tableLength = max - min + 1;
     vector<int> equal(tableLength, 0);
@@ -19,7 +20,21 @@ vector<int> CountKeyEqual(int A[], int n, int min, int max)
     return equal;
 }
 
-vector<int> CountKeyLess(vector<int>& equal, int n, int min, int max)
+inline void CountKeyEqualUsingPreallocatedArray(int A[], int *equal, int n, int min, int max)
+{
+    int tableLength = max - min + 1;
+    for (int i = 0; i < tableLength; ++i)
+    {
+        equal[i] = 0;
+    }
+
+    for (int i = 0; i < n; ++i)
+    {
+        ++equal[A[i]];
+    }
+}
+
+inline vector<int> CountKeyLessUsingNewVector(vector<int>& equal, int n, int min, int max)
 {
     int tableLength = max - min + 1;
     vector<int> less(tableLength, 0);
@@ -33,17 +48,21 @@ vector<int> CountKeyLess(vector<int>& equal, int n, int min, int max)
     return less;
 }
 
-void RearrangeInplace(int *A, vector<int>& less, int n, int min, int max)
+inline void CountKeyLessUsingPreallocatedArray(int *equal, int *less, int n, int min, int max)
 {
-    vector<int> next(less);
-
-    for (int i = min; i <= max; ++i)
+    int tableLength = max - min + 1;
+    for (int i = 0; i < tableLength; ++i)
     {
-        A[next[i]++] = i;
+        less[i] = 0;
+    }
+
+    for (int i = min + 1; i <= max; ++i)
+    {
+        less[i] = less[i - 1] + equal[i - 1];
     }
 }
 
-vector<int> Rearrange(vector<int>& less, int n, int min, int max)
+inline vector<int> RearrangeUsingNewVector(vector<int>& less, int n, int min, int max)
 {
     vector<int> next(less);
 
@@ -58,18 +77,39 @@ vector<int> Rearrange(vector<int>& less, int n, int min, int max)
     return B;
 }
 
-void CountingSortInplace(int A[], int n, int min, int max)
+inline void RearrangeUsingPreallocatedArray(int *A, int *less, int *next, int n, int min, int max)
 {
-    vector<int> equal = CountKeyEqual(A, n, min, max);
-    vector<int> less  = CountKeyLess(equal, n, min, max);
-    RearrangeInplace(A, less, n, min, max);
+    int tableLength = max - min + 1;
+    for (int i = 0; i < tableLength; ++i)
+    {
+        next[i] = less[i];
+    }
+
+    for (int i = min; i <= max; ++i)
+    {
+        A[next[i]++] = i;
+    }
 }
 
-vector<int> CountingSort(int A[], int n, int min, int max)
+inline void CountingSortUsingPreallocatedArray(int A[], int n, int min, int max)
 {
-    vector<int> equal = CountKeyEqual(A, n, min, max);
-    vector<int> less  = CountKeyLess(equal, n, min, max);
-    return Rearrange(less, n, min, max);
+    static int equal[1000];
+    static int less[1000];
+    static int next[1000];
+
+    CountKeyEqualUsingPreallocatedArray(A, equal, n, min, max);
+    CountKeyLessUsingPreallocatedArray(equal, less, n, min, max);
+    RearrangeUsingPreallocatedArray(A, less, next, n, min, max);
+}
+
+inline vector<int> CountingSortUsingNewVector(int A[], int n, int min, int max)
+{
+    // Performance is not good because of this:
+    // http://stackoverflow.com/questions/470683/memory-allocation-deallocation-bottleneck
+
+    vector<int> equal = CountKeyEqualUsingNewVector(A, n, min, max);
+    vector<int> less  = CountKeyLessUsingNewVector(equal, n, min, max);
+    return RearrangeUsingNewVector(less, n, min, max);
 }
 
 // int main(int argc, char **argv)

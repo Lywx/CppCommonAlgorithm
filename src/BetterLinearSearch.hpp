@@ -9,7 +9,7 @@ using namespace std;
 // A: an array.
 // n: the number of elements in A to search through.
 // x : the value being searched for.
-int BetterLinearSearch(int A[], int n, int x)
+inline int BetterLinearSearch(int A[], int n, int x)
 {
     for (auto i = 0; i < n; ++i)
     {

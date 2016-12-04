@@ -41,7 +41,7 @@ void RequireNotFound(int *A, int n, int x, int line)
 
 TEST_CASE("Search Test", "")
 {
-    SECTION("")
+    SECTION("Search 1, N = 5")
     {
         // TODO(Wuxiang): Add more test cases.
         int A[5] = { 0, 1, 2, 3, 4 };

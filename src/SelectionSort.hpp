@@ -27,24 +27,3 @@ void SelectionSort(T A[], int n)
         A[i] = minValue;
     }
 }
-
-void SelectionSort(int A[], int n)
-{
-    for (auto i = 0; i < n; ++i)
-    {
-        auto minValue = A[i];
-        auto minIndex = i;
-
-        for (auto j = i + 1; j < n; ++j)
-        {
-            if (minValue > A[j])
-            {
-                minValue = A[j];
-                minIndex = j;
-            }
-        }
-
-        A[minIndex] = A[i];
-        A[i] = minValue;
-    }
-}

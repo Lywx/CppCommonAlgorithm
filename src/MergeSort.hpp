@@ -6,7 +6,7 @@
 using namespace std;
 
 template <typename T>
-void Merge(T A[], int begin, int end, int middle, T sentinel)
+void MergeUsingNewArray(T A[], int begin, int end, int middle, T sentinel)
 {
     int n1 = middle - begin + 1;
     int n2 = end - middle;
@@ -50,22 +50,7 @@ void Merge(T A[], int begin, int end, int middle, T sentinel)
 }
 
 template <typename T>
-void MergeSort(T A[], int begin, int end, T sentinel)
-{
-    if (begin >= end)
-    {
-        return;
-    }
-
-    int middle = (begin + end) / 2;
-
-    MergeSort(A, begin, middle, sentinel);
-    MergeSort(A, middle + 1, end, sentinel);
-    Merge(A, begin, end, middle, sentinel);
-}
-
-template <typename T>
-void MergeUsingVector(T A[], int begin, int end, int middle, T sentinel) noexcept
+void MergeUsingNewVector(T A[], int begin, int end, int middle, T sentinel) noexcept
 {
     int n1 = middle - begin + 1;
     int n2 = end - middle;
@@ -107,26 +92,32 @@ void MergeUsingVector(T A[], int begin, int end, int middle, T sentinel) noexcep
     }
 }
 
-void MergeUsingVector(int A[], int begin, int end, int middle, int sentinel) noexcept
+inline void MergeUsingPreallocatedArray(int A[], int begin, int end, int middle, int sentinel)
 {
+    static int MergeArrayB[1000];
+    static int MergeArrayC[1000];
+
     int n1 = middle - begin + 1;
     int n2 = end - middle;
 
-    vector<int> B = vector<int>();
-    B.assign(n1 + 1, sentinel);
+    // The order of execution should be identical to figure in P43
+    // printf("%d %d %d\n", begin + 1, middle + 1, end + 1);
 
-    vector<int> C = vector<int>();
-    C.assign(n2 + 1, sentinel);
+    // NOTE(Wuxiang): Use preallocated memory to reduce memory bottleneck.
+    int *B = MergeArrayB;
+    int *C = MergeArrayC;
 
     for (int i = begin, j = 0; i <= middle; ++i, ++j)
     {
         B[j] = A[i];
     }
+    B[n1] = sentinel;
 
     for (int i = middle + 1, j = 0; i <= end; ++i, ++j)
     {
         C[j] = A[i];
     }
+    C[n2] = sentinel;
 
     int bIndex = 0, cIndex = 0;
     for (int aIndex = begin; aIndex <= end; ++aIndex)
@@ -145,7 +136,7 @@ void MergeUsingVector(int A[], int begin, int end, int middle, int sentinel) noe
 }
 
 template <typename T>
-void MergeSortUsingVector(T A[], int begin, int end, T sentinel)
+void MergeSortUsingNewArray(T A[], int begin, int end, T sentinel)
 {
     if (begin >= end)
     {
@@ -154,7 +145,36 @@ void MergeSortUsingVector(T A[], int begin, int end, T sentinel)
 
     int middle = (begin + end) / 2;
 
-    MergeSortUsingVector(A, begin, middle, sentinel);
-    MergeSortUsingVector(A, middle + 1, end, sentinel);
-    MergeUsingVector(A, begin, end, middle, sentinel);
+    MergeSortUsingNewArray(A, begin, middle, sentinel);
+    MergeSortUsingNewArray(A, middle + 1, end, sentinel);
+    MergeUsingNewArray(A, begin, end, middle, sentinel);
+}
+
+template <typename T>
+void MergeSortUsingNewVector(T A[], int begin, int end, T sentinel)
+{
+    if (begin >= end)
+    {
+        return;
+    }
+
+    int middle = (begin + end) / 2;
+
+    MergeSortUsingNewVector(A, begin, middle, sentinel);
+    MergeSortUsingNewVector(A, middle + 1, end, sentinel);
+    MergeUsingNewVector(A, begin, end, middle, sentinel);
+}
+
+inline void MergeSortUsingPreallocatedArray(int A[], int begin, int end, int sentinel)
+{
+    if (begin >= end)
+    {
+        return;
+    }
+
+    int middle = (begin + end) / 2;
+
+    MergeSortUsingPreallocatedArray(A, begin, middle, sentinel);
+    MergeSortUsingPreallocatedArray(A, middle + 1, end, sentinel);
+    MergeUsingPreallocatedArray(A, begin, end, middle, sentinel);
 }

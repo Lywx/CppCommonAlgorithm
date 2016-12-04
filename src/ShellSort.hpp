@@ -44,7 +44,7 @@ void ShellSortA(T *A, int n)
                 A[knownIndex + step] = newValue;
             }
 
-            //// Another way to write this loop, just change the way index work.
+            //// Another way to write this loop, just change the way index works.
             //// This solution is parallel to the InsertionSort.cpp
             // for (int stepIndex = stepOffset + step;
             //         stepIndex < n; stepIndex += step)
